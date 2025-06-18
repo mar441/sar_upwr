@@ -32,7 +32,7 @@ def load_anomaly_data(file_path, file_label):
     df['pid'] = df['pid'].astype(str)
     return df
 
-geo_data_nysa_ml = pd.read_csv('nysa_geo.csv', delimiter=',')
+geo_data_nysa_ml = pd.read_csv('grunwlad_geo.csv', delimiter=',')
 geo_data_nysa_ml['pid'] = geo_data_nysa_ml['pid'].astype(str).str.strip()
 
 displacement_data_nysa_ml = load_displacement_data('final_nysa.csv', 
@@ -40,15 +40,15 @@ displacement_data_nysa_ml = load_displacement_data('final_nysa.csv',
 displacement_data_nysa_ml['pid'] = displacement_data_nysa_ml['pid'].astype(str).str.strip() 
 all_data_nysa_ml = pd.merge(displacement_data_nysa_ml, geo_data_nysa_ml, on='pid', how='left')
 
-prediction_data_nysa_ml = pd.read_csv('predictions_nysa_ml.csv', delimiter=',')
+prediction_data_nysa_ml = pd.read_csv('predictions_grunwald.csv', delimiter=',')
 prediction_data_nysa_ml = prediction_data_nysa_ml.melt(var_name='pid', value_name='predicted_displacement')
 prediction_data_nysa_ml['label'] = 'ML Nysa Prediction Set'
 prediction_data_nysa_ml['step'] = prediction_data_nysa_ml.groupby('pid').cumcount()
 
-anomaly_data_nysa_95_ml = load_anomaly_data('anomaly_nysa_ml_95.csv', 'Anomaly Set 1 ML (95%)')
+anomaly_data_nysa_95_ml = load_anomaly_data('anomaly_grunwald_ml_95.csv', 'Anomaly Set 1 ML (95%)')
 anomaly_data_nysa_95_ml = anomaly_data_nysa_95_ml.groupby('pid').head(60)
 
-anomaly_data_nysa_99_ml = load_anomaly_data('anomaly_nysa_ml_99.csv', 'Anomaly Set 1 ML (99%)')
+anomaly_data_nysa_99_ml = load_anomaly_data('anomaly_grunwald_ml_99.csv', 'Anomaly Set 1 ML (99%)')
 anomaly_data_nysa_99_ml = anomaly_data_nysa_99_ml.groupby('pid').head(60)
 
 all_data_nysa_ml.sort_values(by=['pid', 'timestamp'], inplace=True)
@@ -280,7 +280,7 @@ app.layout = html.Div([
             dcc.Dropdown(
                 id='area-dropdown',
                 options=[
-                    {'label': 'Zbiornik Nysa', 'value': 'nysa'},
+                    {'label': 'Plac Grunwaldzki - Wrocław', 'value': 'nysa'},
                 ],
                 value='nysa',
                 clearable=False,
