@@ -32,7 +32,7 @@ def load_anomaly_data(file_path, file_label):
     df['pid'] = df['pid'].astype(str)
     return df
 
-geo_data_nysa_ml = pd.read_csv('grunwald_geo.csv', delimiter=',')
+geo_data_nysa_ml = pd.read_csv('grunwald_geo.csv', delimiter=';')
 geo_data_nysa_ml['pid'] = geo_data_nysa_ml['pid'].astype(str).str.strip()
 
 displacement_data_nysa_ml = load_displacement_data('predictions_grunwald.csv', 
@@ -40,7 +40,7 @@ displacement_data_nysa_ml = load_displacement_data('predictions_grunwald.csv',
 displacement_data_nysa_ml['pid'] = displacement_data_nysa_ml['pid'].astype(str).str.strip() 
 all_data_nysa_ml = pd.merge(displacement_data_nysa_ml, geo_data_nysa_ml, on='pid', how='left')
 
-prediction_data_nysa_ml = pd.read_csv('predictions_grunwald.csv', delimiter=',')
+prediction_data_nysa_ml = pd.read_csv('predictions_grunwald.csv', delimiter=';')
 prediction_data_nysa_ml = prediction_data_nysa_ml.melt(var_name='pid', value_name='predicted_displacement')
 prediction_data_nysa_ml['label'] = 'ML Nysa Prediction Set'
 prediction_data_nysa_ml['step'] = prediction_data_nysa_ml.groupby('pid').cumcount()
