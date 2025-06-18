@@ -16,7 +16,7 @@ import plotly.io as pio
 import dash_auth
 
 def load_displacement_data(file_path, file_label):
-    df = pd.read_csv(file_path, delimiter=';')
+    df = pd.read_csv(file_path)
     df = df.melt(id_vars=['Date'], 
                  var_name='pid', 
                  value_name='displacement')
@@ -40,16 +40,16 @@ displacement_data_nysa_ml = load_displacement_data('predictions_grunwald.csv',
 displacement_data_nysa_ml['pid'] = displacement_data_nysa_ml['pid'].astype(str).str.strip() 
 all_data_nysa_ml = pd.merge(displacement_data_nysa_ml, geo_data_nysa_ml, on='pid', how='left')
 
-prediction_data_nysa_ml = pd.read_csv('predictions_grunwald.csv', delimiter=';')
+prediction_data_nysa_ml = pd.read_csv('predictions_grunwald.csv', delimiter=',')
 prediction_data_nysa_ml = prediction_data_nysa_ml.melt(var_name='pid', value_name='predicted_displacement')
 prediction_data_nysa_ml['label'] = 'ML Nysa Prediction Set'
 prediction_data_nysa_ml['step'] = prediction_data_nysa_ml.groupby('pid').cumcount()
 
 anomaly_data_nysa_95_ml = load_anomaly_data('anomaly_grunwald_auto_95.csv', 'Anomaly Set 1 ML (95%)')
-anomaly_data_nysa_95_ml = anomaly_data_nysa_95_ml.groupby('pid').head(60)
+anomaly_data_nysa_95_ml = anomaly_data_nysa_95_ml.groupby('pid').head(61)
 
 anomaly_data_nysa_99_ml = load_anomaly_data('anomaly_grunwald_auto_99.csv', 'Anomaly Set 1 ML (99%)')
-anomaly_data_nysa_99_ml = anomaly_data_nysa_99_ml.groupby('pid').head(60)
+anomaly_data_nysa_99_ml = anomaly_data_nysa_99_ml.groupby('pid').head(61)
 
 all_data_nysa_ml.sort_values(by=['pid', 'timestamp'], inplace=True)
 all_data_nysa_ml['displacement_diff'] = all_data_nysa_ml.groupby('pid')['displacement'].diff().round(1)
