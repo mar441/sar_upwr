@@ -35,8 +35,7 @@ def load_anomaly_data(file_path, file_label):
 geo_data_nysa_ml = pd.read_csv('grunwald_geo.csv', delimiter=';')
 geo_data_nysa_ml['pid'] = geo_data_nysa_ml['pid'].astype(str).str.strip()
 
-displacement_data_nysa_ml = load_displacement_data('predictions_grunwald.csv', 
-                                                      'Descending 22')
+displacement_data_nysa_ml = load_displacement_data('grunwald_displ.csv', 'Descending 22')
 displacement_data_nysa_ml['pid'] = displacement_data_nysa_ml['pid'].astype(str).str.strip() 
 all_data_nysa_ml = pd.merge(displacement_data_nysa_ml, geo_data_nysa_ml, on='pid', how='left')
 
