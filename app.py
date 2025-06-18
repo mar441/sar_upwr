@@ -16,7 +16,7 @@ import plotly.io as pio
 import dash_auth
 
 def load_displacement_data(file_path, file_label):
-    df = pd.read_csv(file_path)
+    df = pd.read_csv(file_path, delimiter=';')
     df = df.melt(id_vars=['Date'], 
                  var_name='pid', 
                  value_name='displacement')
