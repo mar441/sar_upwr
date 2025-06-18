@@ -969,7 +969,6 @@ def display_displacement(clickData, start_date, end_date, y_min, y_max, selected
 
     return fig, {'display': 'block'}, attributes_data, {'display': 'block'}
 
-if __name__ == '__main__':
-    app.run(port=8060, debug=True)
-
-     
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
